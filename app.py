@@ -90,15 +90,20 @@ def get_api_key():
     except Exception:
         return os.getenv("GEMINI_API_KEY", "")
 
-
 def generate_answer(question, results):
     if results.empty or float(results.iloc[0]["score"]) < 0.08:
         return "I could not find a confirmed answer in the transition knowledge base. Please contact your HRBP for guidance."
+
     api_key = get_api_key()
+
     if not api_key:
-        return "The chatbot is not connected to the AI service yet. The owner needs to add the GEMINI_API_KEY in Streamlit Secrets."
-    client = genai.Client(api_key=api_key)
-    prompt = f"""{SYSTEM_RULES}
+        return "NO API KEY FOUND"
+
+    try:
+        client = genai.Client(api_key=api_key)
+
+        prompt = f"""
+{SYSTEM_RULES}
 
 KNOWLEDGE-BASE EXCERPTS:
 {context_from(results)}
@@ -106,12 +111,18 @@ KNOWLEDGE-BASE EXCERPTS:
 EMPLOYEE QUESTION:
 {question}
 
-Answer only from the excerpts above."""response = client.models.generate_content(
-    model="gemini-3.6-flash",
-    contents=prompt
-)
-    response = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
-    return response.text.strip() if response.text else "Please contact your HRBP for guidance."
+Answer only from the excerpts above.
+"""
+
+        response = client.models.generate_content(
+            model="gemini-3.6-flash",
+            contents=prompt
+        )
+
+        return response.text.strip() if response.text else "Please contact your HRBP for guidance."
+
+    except Exception as e:
+        return f"GEMINI ERROR: {str(e)}"
 
 
 st.title(APP_TITLE)
