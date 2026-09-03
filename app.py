@@ -151,13 +151,13 @@ if question:
     with st.chat_message("user"):
         st.markdown(question)
     with st.chat_message("assistant"):
-        with st.spinner("Checking the approved knowledge base..."):
-            try:
-                matches = retrieve(question, df, vectorizer, matrix)
-                answer = generate_answer(question, matches)
-            except Exception:
-                answer = f"ERROR: {str(e)}"
-        st.markdown(answer)
+    with st.spinner("Checking the approved knowledge base..."):
+        try:
+            matches = retrieve(question, df, vectorizer, matrix)
+            answer = generate_answer(question, matches)
+        except Exception as e:
+            answer = f"ERROR: {str(e)}"
+    st.markdown(answer)
     st.session_state.messages.append({"role": "assistant", "content": answer})
 
 st.divider()
