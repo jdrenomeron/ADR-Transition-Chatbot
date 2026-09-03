@@ -156,7 +156,7 @@ if question:
                 matches = retrieve(question, df, vectorizer, matrix)
                 answer = generate_answer(question, matches)
             except Exception:
-                answer = "f"ERROR:{str(e)}"
+                answer = f"ERROR: {str(e)}"
         st.markdown(answer)
     st.session_state.messages.append({"role": "assistant", "content": answer})
 
