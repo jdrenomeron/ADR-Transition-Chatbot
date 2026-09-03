@@ -146,19 +146,27 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 question = selected or st.chat_input("Ask your question")
+
 if question:
-    st.session_state.messages.append({"role": "user", "content": question})
+    st.session_state.messages.append(
+        {"role": "user", "content": question}
+    )
+
     with st.chat_message("user"):
         st.markdown(question)
-    with st.chat_message("assistant"):
-    with st.spinner("Checking the approved knowledge base..."):
-        try:
-            matches = retrieve(question, df, vectorizer, matrix)
-            answer = generate_answer(question, matches)
-        except Exception as e:
-            answer = f"ERROR: {str(e)}"
-    st.markdown(answer)
-    st.session_state.messages.append({"role": "assistant", "content": answer})
 
+    with st.chat_message("assistant"):
+        with st.spinner("Checking the approved knowledge base..."):
+            try:
+                matches = retrieve(question, df, vectorizer, matrix)
+                answer = generate_answer(question, matches)
+            except Exception as e:
+                answer = f"ERROR: {str(e)}"
+
+        st.markdown(answer)
+
+    st.session_state.messages.append(
+        {"role": "assistant", "content": answer}
+    )
 st.divider()
 st.caption("For individual cases, deadlines, approvals, or document verification, contact your HRBP.")
