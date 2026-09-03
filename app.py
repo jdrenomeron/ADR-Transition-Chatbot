@@ -106,7 +106,10 @@ KNOWLEDGE-BASE EXCERPTS:
 EMPLOYEE QUESTION:
 {question}
 
-Answer only from the excerpts above."""
+Answer only from the excerpts above."""response = client.models.generate_content(
+    model="gemini-3.6-flash",
+    contents=prompt
+)
     response = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
     return response.text.strip() if response.text else "Please contact your HRBP for guidance."
 
