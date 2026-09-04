@@ -114,10 +114,20 @@ EMPLOYEE QUESTION:
 Answer only from the excerpts above.
 """
 
+import time
+
+for attempt in range(3):
+    try:
         response = client.models.generate_content(
-            model="gemini-3.6-flash",
+            model="gemini-3.6-flash-lite",
             contents=prompt
         )
+        break
+    except Exception as e:
+        if "503" in str(e):
+            time.sleep(2)
+        else:
+            raise
 
         return response.text.strip() if response.text else "Please contact your HRBP for guidance."
 
