@@ -115,14 +115,14 @@ Answer only from the excerpts above.
 """
 
         response = client.models.generate_content(
-            model="gemini-3.6-flash-lite",
+            model="gemini-3.6-flash",
             contents=prompt
         )
 
         return response.text.strip() if response.text else "Please contact your HRBP for guidance."
 
-    except Exception as e:
-        return f"GEMINI ERROR: {str(e)}"
+except Exception:
+    return "I'm currently unable to answer that question. Please try again in a few moments or contact HRBP."
 
 st.title(APP_TITLE)
 st.caption("AI answers grounded in the approved employee-transition knowledge base")
