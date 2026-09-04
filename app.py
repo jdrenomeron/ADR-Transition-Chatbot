@@ -126,6 +126,7 @@ Answer only from the excerpts above.
 ``
 
 
+
 st.title(APP_TITLE)
 st.caption("AI answers grounded in the approved employee-transition knowledge base")
 with st.expander("Important notice", expanded=False):
