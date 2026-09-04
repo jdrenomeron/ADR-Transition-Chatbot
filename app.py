@@ -121,8 +121,8 @@ Answer only from the excerpts above.
 
         return response.text.strip() if response.text else "Please contact your HRBP for guidance."
 
-except Exception as e:
-    return f"REAL ERROR: {str(e)}"
+    except Exception as e:
+        return f"REAL ERROR: {str(e)}"
 
 st.title(APP_TITLE)
 st.caption("AI answers grounded in the approved employee-transition knowledge base")
