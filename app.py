@@ -123,9 +123,6 @@ Answer only from the excerpts above.
 
     except Exception as e:
         return f"GEMINI ERROR: {str(e)}"
-``
-
-
 
 st.title(APP_TITLE)
 st.caption("AI answers grounded in the approved employee-transition knowledge base")
