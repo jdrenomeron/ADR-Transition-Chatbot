@@ -8,9 +8,9 @@ from google import genai
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-st.set_page_config(page_title="MOHRE Transition Assistant", page_icon="💬", layout="centered")
+st.set_page_config(page_title="ADR Transition Assistant", page_icon="💬", layout="centered")
 
-APP_TITLE = "MOHRE Transition Assistant"
+APP_TITLE = "ADR Transition Assistant"
 KB_FILENAME = "EmployeeTransition_Chatbot_Knowledge_Base_August_14_2026.xlsx"
 REQUIRED_COLUMNS = ["Intent ID", "Category", "Primary Question", "Answer"]
 OPTIONAL_COLUMNS = [
@@ -114,17 +114,16 @@ EMPLOYEE QUESTION:
 Answer only from the excerpts above.
 """
 
-response = client.models.generate_content(
-    model="gemini-3.6-flash-lite",
-    contents=prompt
-)
-
-return response.text.strip() if response.text else "Please contact your HRBP for guidance."
+        response = client.models.generate_content(
+            model="gemini-3.6-flash-lite",
+            contents=prompt
+        )
 
         return response.text.strip() if response.text else "Please contact your HRBP for guidance."
 
     except Exception as e:
         return f"GEMINI ERROR: {str(e)}"
+``
 
 
 st.title(APP_TITLE)
